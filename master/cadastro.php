@@ -35,7 +35,7 @@
         <option value="admin">Administrador</option>
       </select>
 
-      <div class="link">Já tem uma conta? <a href="login.php">Entrar</a></div>
+      <div class="link">Já tem uma conta? <a href="#login">Entrar</a></div>
       <button type="submit">Cadastrar</button>
       <input type="hidden" id="senhaHash" name="senhaHash">
     </form>
