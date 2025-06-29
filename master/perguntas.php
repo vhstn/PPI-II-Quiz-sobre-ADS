@@ -96,6 +96,7 @@
       document.getElementById('question-form').reset();
       document.getElementById('id').value = '';
       modal.classList.add('active');
+      document.getElementById('question-form').action = "processamento/perguntas/processa_perguntas.php";
     };
 
     closeBtn.onclick = () => modal.classList.remove('active');
