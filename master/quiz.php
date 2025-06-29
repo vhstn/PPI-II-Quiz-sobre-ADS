@@ -24,7 +24,7 @@
       height: 100vh;
       overflow: hidden;
     }
-    
+
     .pagina {
       display: flex;
       height: 100vh;
@@ -38,7 +38,9 @@
      border-radius: 12px;
      max-width: 900px;
      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+     overflow-y: auto;
     }
+
     .question {
       margin-bottom: 2rem;
     }
