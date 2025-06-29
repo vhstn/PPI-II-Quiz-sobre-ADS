@@ -42,10 +42,10 @@
       confirmButtonText: 'OK'
 
     }).then((resultado) => {
-      if (<?= json_encode(isset($flashMessage['issuccess'])) ?>) {
+      if (<?= json_encode($flashMessage['issuccess'] ?? false) ?>) {
         window.location.href = "index.php#quiz";
       }
-      
+
     })
   <?php endif; ?>
   
