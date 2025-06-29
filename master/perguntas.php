@@ -86,10 +86,10 @@
   </div>
 
   <script>
-    const modal = document.getElementById('question-modal');
-    const openBtn = document.getElementById('add-question-btn');
-    const closeBtn = document.getElementById('close-modal');
-    const modalTitle = document.getElementById('modal-title');
+    var modal = document.getElementById('question-modal');
+    var openBtn = document.getElementById('add-question-btn');
+    var closeBtn = document.getElementById('close-modal');
+    var modalTitle = document.getElementById('modal-title');
 
     openBtn.onclick = () => {
       modalTitle.textContent = 'Nova Pergunta';
