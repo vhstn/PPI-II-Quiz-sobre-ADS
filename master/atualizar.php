@@ -1,54 +1,14 @@
 <?php
-
-    $senhaDefault = "********";
     include_once 'processamento/session_manager.php';
     include_once 'processamento/usuario_dao.php';
 
-    SessionManager::start();
-    $loggedUser = SessionManager::getLoggedUser();
-
-    if ($loggedUser == null) {
-        throw new Exception("Você precisa estar logado para acessar esta página.");
-    }
-
-    // 0 = atualização não executada
-    // 1 = atualização realizada com sucesso
-    // 2 = erro na atualização
-    $sucesso = 0;
-    $mensagem = "";
-    $icon = "";
-
-    if (isset($_REQUEST["nome"])) {
-        try {
-            $nome = $_REQUEST["nome"];
-            $email = $_REQUEST["email"];
-            $senha = $_REQUEST["senha"];
-            $hash = $_REQUEST["senhaHash"];
-            $tipo = $_REQUEST["tipo"][0];
-      
-            $loggedUser->nome = $nome;
-            $loggedUser->email = $email;
-            if ($senha != $senhaDefault) {
-                $loggedUser->senha = $hash;
-            }
-            $loggedUser->tipo = $tipo;
-    
-            $loggedUser->atualizar();
-            SessionManager::setLoggedUser($loggedUser);
-
-            $sucesso = 1;
-            $mensagem = $loggedUser->nome . ", seus dados foram atualizados com sucesso!";
-            $icon = "success";
-
-        } catch (Exception $ex) {
-            $sucesso = 2;
-            $mensagem = "Erro ao atualizar os dados: " . e->getMessage();
-            $icon = "error";
-        }
-    }
+    $senhaDefault = "********";
+    $loggedUser = SessionManager::requireAuthentication();
 
     $uSelected = ($loggedUser->tipo) == "U" ? "selected" : "";
     $aSelected = ($loggedUser->tipo) == "A" ? "selected" : "";
+
+    $flashMessage = SessionManager::getFlashMessage();
 ?>
 
 <!DOCTYPE html>
@@ -91,15 +51,15 @@
 
   monitorarSenha('senha', 'senhaHash');
 
-  <?php if ($sucesso !== 0): ?>
+  <?php if ($flashMessage): ?>
     Swal.fire({
-      icon: <?= json_encode($icon) ?>,
-      title: <?= json_encode($mensagem) ?>,
+      icon: <?= json_encode($flashMessage['icon']) ?>,
+      title: <?= json_encode($flashMessage['message']) ?>,
       confirmButtonText: 'OK'
 
     }).then((resultado) => {
-      if (<?= $sucesso ?> === 1) {
-        window.location.href = "quiz.php";
+      if (<?= json_encode($flashMessage['issuccess'] ?? false) ?>) {
+        window.location.href = "index.php#quiz";
       }
       
     })

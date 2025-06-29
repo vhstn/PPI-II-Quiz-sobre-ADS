@@ -1,40 +1,8 @@
 <?php
-
   include_once 'processamento/session_manager.php';
-  include_once 'processamento/usuario_dao.php';
-
   SessionManager::start();
 
-  // 0 = login não executado
-  // 1 = login realizado com sucesso
-  // 2 = erro no login
-  $sucesso = 0;
-  $mensagem = "";
-  $icon = "";
-
-  if (isset($_REQUEST["email"])) {
-    try {
-      $email = $_REQUEST["email"];
-      $senha = $_REQUEST["senhaHash"];
-      
-      $usuario = Usuario::buscaPorEmailESenha($email, $senha);
-
-      if ($usuario == null) {
-        throw new Exception("Usuário ou senha incorretos.");
-      }
-
-      SessionManager::setLoggedUser($usuario);
-
-      $sucesso = 1;
-      $mensagem = "Login realizado com sucesso. \nBem vindo(a), " . $usuario->nome . "!";
-      $icon = "success";
-
-    } catch (Exception $ex) {
-      $sucesso = 2;
-      $mensagem = "Erro no login: " . $ex->getMessage();
-      $icon = "error";
-    }
-  }
+  $flashMessage = SessionManager::getFlashMessage();
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +18,7 @@
 <body>
   <div class="container">
     <h2>Entrar na Conta</h2>
-    <form id="login-form" action="login.php" method="post">
+    <form id="login-form" action="processamento/processa_login.php" method="post">
 
       <label for="email">E-mail:</label>
       <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
@@ -67,15 +35,15 @@
 
   monitorarSenha('senha', 'senhaHash');
 
-  <?php if ($sucesso !== 0): ?>
+  <?php if ($flashMessage): ?>
     Swal.fire({
-      icon: <?= json_encode($icon) ?>,
-      title: <?= json_encode($mensagem) ?>,
+      icon: <?= json_encode($flashMessage['icon']) ?>,
+      title: <?= json_encode($flashMessage['message']) ?>,
       confirmButtonText: 'OK'
 
     }).then((resultado) => {
-      if (<?= $sucesso ?> === 1) {
-        window.location.href = "quiz.php";
+      if (<?= json_encode(isset($flashMessage['issuccess'])) ?>) {
+        window.location.href = "index.php#quiz";
       }
       
     })

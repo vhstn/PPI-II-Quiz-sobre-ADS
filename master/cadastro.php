@@ -1,38 +1,8 @@
 <?php
-  include 'processamento/usuario_dao.php';
-  
-  // 0 = cadastro não executado
-  // 1 = cadastro realizado com sucesso
-  // 2 = erro no cadastro
-  $sucessoNoCadastro = 0;
-  $mensagem = "";
-  $icon = "";
+  include_once 'processamento/session_manager.php';
+  SessionManager::start();
 
-  if (isset($_REQUEST["nome"])) {
-    try {
-      $nome = $_REQUEST["nome"];
-      $email = $_REQUEST["email"];
-      $senha = $_REQUEST["senhaHash"];
-      $tipo = $_REQUEST["tipo"][0];
-
-      $usuario = new Usuario(
-        nome: $nome,
-        email: $email,
-        senha: $senha,
-        tipo: $tipo
-      );
-  
-      $usuario->persistir();
-      $sucessoNoCadastro = 1;
-      $mensagem = "Cadastro realizado com sucesso!";
-      $icon = "success";
-
-    } catch (Exception $ex) {
-      $sucessoNoCadastro = 2;
-      $mensagem = "Erro no cadastro: " . $ex->getMessage();
-      $icon = "error";
-    }
-  }
+  $flashMessage = SessionManager::getFlashMessage();
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +18,7 @@
 <body>
   <div class="container">
     <h2>Crie sua Conta</h2>
-    <form id="register-form" action="cadastro.php" method="post">
+    <form id="register-form" action="processamento/processa_cadastro.php" method="post">
 
       <label for="nome">Nome:</label>
       <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
@@ -76,8 +46,11 @@
 
   monitorarSenha('senha', 'senhaHash');
 
-  <?php if ($sucessoNoCadastro !== 0): ?>
-     fire_swal(<?= json_encode($icon) ?>, <?= json_encode($mensagem) ?>);
+  <?php if ($flashMessage): ?>
+     fire_swal(
+      <?= json_encode($flashMessage['icon']) ?>, 
+      <?= json_encode($flashMessage['message']) ?>
+    );
   <?php endif; ?>
 
 </script>

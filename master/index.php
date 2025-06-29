@@ -24,6 +24,12 @@
       case '#perguntas':
         pagina = 'perguntas.php';
         break;
+      case '#quiz':
+        pagina = 'quiz.php';
+        break;
+      case '#atualizar':
+        pagina = 'atualizar.php';
+        break;
       default:
         pagina = 'cadastro.php';
     }
@@ -46,8 +52,6 @@
   window.addEventListener('hashchange', carregarPaginaHash);
 
   $(document).ready(carregarPaginaHash);
-
-  monitorarSenha('senha', 'senhaHash');
 
 </script>
 </html>
