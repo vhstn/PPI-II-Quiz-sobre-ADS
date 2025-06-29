@@ -19,7 +19,7 @@
       
             $loggedUser->nome = $nome;
             $loggedUser->email = $email;
-            if ($senha != $senhaDefault) {
+            if ($senha !== $senhaDefault) {
                 $loggedUser->senha = $hash;
             }
             $loggedUser->tipo = $tipo;
@@ -35,7 +35,7 @@
 
         } catch (Exception $ex) {            
             SessionManager::setFlashMessage([
-                'icon' = 'error',
+                'icon' => 'error',
                 'message' => 'Erro ao atualizar os dados: ' . $ex->getMessage()
             ]);
         }

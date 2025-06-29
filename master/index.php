@@ -53,5 +53,7 @@
 
   $(document).ready(carregarPaginaHash);
 
+  monitorarSenha('senha', 'senhaHash');
+
 </script>
 </html>

@@ -2,6 +2,8 @@
     include_once 'processamento/session_manager.php';
     include_once 'processamento/usuario_dao.php';
 
+    SessionManager::start();
+    
     $senhaDefault = "********";
     $loggedUser = SessionManager::requireAuthentication();
 
@@ -24,7 +26,7 @@
 <body>
   <div class="container">
     <h2><?= $loggedUser->nome ?>, atualize seu cadastro</h2>
-    <form id="register-form" action="atualizar.php" method="post">
+    <form id="register-form" action="processamento/processa_atualizar.php" method="post">
 
       <label for="nome">Nome:</label>
       <input type="text" id="nome" name="nome" placeholder="Digite seu nome" value=<?= $loggedUser->nome ?> required>

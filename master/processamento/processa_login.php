@@ -4,7 +4,7 @@
   include_once 'usuario_dao.php';
 
   SessionManager::start();
-
+  
   $mensagem = "";
   $icon = "";
 
@@ -36,5 +36,4 @@
   }
 
   header('Location: ../index.php#login');
-  exit();
 ?>
