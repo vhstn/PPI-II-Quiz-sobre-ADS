@@ -1,117 +1,178 @@
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #667eea, #764ba2);
-      padding: 2rem;
-      color: #333;
-    }
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    button {
-      background-color: #6699ff;
-      color: white;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-bottom: 1rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 12px;
-      text-align: left;
-    }
-    th {
-      background-color: #f0f0f0;
-    }
+   body {
+     margin: 0;
+     font-family: 'Segoe UI', sans-serif;
+     background: linear-gradient(to right, #667eea, #764ba2);
+   }
 
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    }
-    .modal-content h3 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .modal-content form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .modal-content input, .modal-content select {
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    .modal-content .actions {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 1rem;
-    }
-    .modal-content .actions button {
-      flex: 1;
-    }
+   .container {
+     flex: 1;
+     padding: 2rem;
+     background: white;
+     margin: 2rem auto;
+     border-radius: 12px;
+     max-width: 900px;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+   }
 
-    /* Estiliza a lista dentro da célula de opções */
-.opcoes-lista {
-  list-style-type: none; /* Remove os marcadores (bolinhas) da lista */
-  padding-left: 0;       /* Remove o preenchimento padrão à esquerda */
-  margin: 0;             /* Remove a margem padrão */
-}
+   .pagina {
+     display: flex;
+     min-height: 100vh;
+   }
 
-.opcoes-lista li {
-  padding: 4px 0; /* Adiciona um pequeno espaçamento vertical entre as opções */
-}
+   h2 {
+     text-align: center;
+     margin-bottom: 1.5rem;
+   }
 
-/* Estiliza os botões de Ação na tabela */
-.action-btn {
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  margin-right: 5px; /* Espaço entre os botões */
-  width: 80px; /* Largura fixa para alinhamento */
-  text-align: center;
-}
+   .sidebar-h2 {
+     text-align: center;
+     margin-bottom: 20px;
+   }
 
-.edit-btn {
-  background-color: #f0ad4e; /* Laranja */
-}
+   button {
+     background-color: #6699ff;
+     color: white;
+     padding: 10px 16px;
+     border: none;
+     border-radius: 6px;
+     font-size: 1rem;
+     cursor: pointer;
+     margin-bottom: 1rem;
+   }
 
-.delete-btn {
-  background-color: #d9534f; /* Vermelho */
-}
+   table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-top: 0.95rem;
+   }
+
+   th,
+   td {
+     border: 1px solid #ccc;
+     padding: 8px 10px;
+     text-align: left;
+     white-space: nowrap;
+   }
+
+   th {
+     background-color: #f0f0f0;
+   }
+
+   /* Modal */
+   .modal {
+     display: none;
+     position: fixed;
+     inset: 0;
+     background: rgba(0, 0, 0, 0.6);
+     justify-content: center;
+     align-items: center;
+     z-index: 10;
+   }
+
+   .modal.active {
+     display: flex;
+   }
+
+   .modal-content {
+     background: white;
+     padding: 20px;
+     border-radius: 12px;
+     width: 90%;
+     max-width: 500px;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+   }
+
+   .modal-content h3 {
+     margin-top: 0;
+     margin-bottom: 1rem;
+     text-align: center;
+   }
+
+   .modal-content form {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+   }
+
+   .modal-content input,
+   .modal-content select {
+     padding: 10px;
+     border-radius: 6px;
+     border: 1px solid #ccc;
+     font-size: 1rem;
+   }
+
+   .modal-content .actions {
+     display: flex;
+     justify-content: space-between;
+     gap: 10px;
+     margin-top: 1rem;
+   }
+
+   .modal-content .actions button {
+     flex: 1;
+   }
+
+   /* Estiliza a lista dentro da célula de opções */
+   .opcoes-lista {
+     list-style-type: none;
+     /* Remove os marcadores (bolinhas) da lista */
+     padding-left: 0;
+     /* Remove o preenchimento padrão à esquerda */
+     margin: 0;
+     /* Remove a margem padrão */
+   }
+
+   .opcoes-lista li {
+     padding: 4px 0;
+     /* Adiciona um pequeno espaçamento vertical entre as opções */
+   }
+
+   /* Estiliza os botões de Ação na tabela */
+   .action-btn {
+     padding: 6px 12px;
+     font-size: 0.9rem;
+     margin-right: 5px;
+     /* Espaço entre os botões */
+     width: 80px;
+     /* Largura fixa para alinhamento */
+     text-align: center;
+   }
+
+   .edit-btn {
+     background-color: #f0ad4e;
+     /* Laranja */
+   }
+
+   .delete-btn {
+     background-color: #d9534f;
+     /* Vermelho */
+   }
+
+   .sidebar {
+     width: 220px;
+     background-color: #1e1e2f;
+     color: white;
+     padding: 2rem 1rem;
+     display: flex;
+     flex-direction: column;
+   }
+
+   /* Botões da sidebar */
+   .nav-button {
+     background: none;
+     border: none;
+     color: white;
+     padding: 12px;
+     text-align: left;
+     width: 100%;
+     font-size: 1rem;
+     cursor: pointer;
+     border-radius: 6px;
+     transition: background 0.2s;
+     margin-bottom: 0px;
+   }
+
+   .nav-button:hover {
+     background-color: #334;
+   }

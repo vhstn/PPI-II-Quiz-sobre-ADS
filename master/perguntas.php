@@ -19,6 +19,15 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+<div class="pagina">
+  <div class="sidebar">
+    <h2 class="sidebar-h2">Quiz ADS</h2>
+    <button class="nav-button" onclick="location.href='quiz.php'">Quiz</button>
+    <button class="nav-button" onclick="location.href='usuarios.php'">Usuários</button>
+    <button class="nav-button" onclick="location.href='perguntas.php'">Perguntas</button>
+    <button class="nav-button" onclick="location.href='logout.php'">Sair</button>
+  </div>
+
   <div class="container">
     <h2>Perguntas do Quiz</h2>
     <button id="add-question-btn">Adicionar Nova Pergunta</button>
@@ -57,6 +66,7 @@
         </tbody>
       </table>
     <?php endif; ?>
+    </div>
   </div>
 
   <!-- Modal adicionar/editar -->

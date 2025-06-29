@@ -8,6 +8,21 @@
   <meta charset="UTF-8" />
   <title>Quiz de ADS</title>
 </head>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    overflow-x: hidden;
+  }
+
+#conteudo-principal {
+  width: 100%;
+  min-height: 100vh;
+}
+</style>
+
+</style>
 <body>
     <div id="conteudo-principal"></div>
 </body>
