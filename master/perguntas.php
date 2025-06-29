@@ -31,7 +31,10 @@
   <div class="container">
     <h2>Perguntas do Quiz</h2>
     <button id="add-question-btn">Adicionar Nova Pergunta</button>
-
+    <button onclick="document.getElementById('form-dump-inicial').submit()">Realizar dump inicial</button>
+    <form id="form-dump-inicial" action="processamento/perguntas/processa_dump_inicial.php" method="post" >
+    </form>
+    
     <?php if (empty($perguntas)): ?>
       <h3>Sem perguntas cadastradas no sistema.</h3>
     <?php else: ?>
