@@ -97,8 +97,8 @@
    <div class="pagina">
  <div class="sidebar">
     <h2>Quiz ADS</h2>
+    <button class="nav-button" onclick="location.href='atualizar.php'">Minha conta</button>
     <button class="nav-button" onclick="location.href='quiz.php'">Quiz</button>
-    <button class="nav-button" onclick="location.href='usuarios.php'">Usuários</button>
     <button class="nav-button" onclick="location.href='perguntas.php'">Perguntas</button>
     <button class="nav-button" onclick="location.href='logout.php'">Sair</button>
   </div>
