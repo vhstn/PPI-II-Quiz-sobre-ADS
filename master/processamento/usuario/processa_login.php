@@ -1,7 +1,7 @@
 <?php
 
-  include_once 'session_manager.php';
-  include_once 'usuario_dao.php';
+  include_once '../session_manager.php';
+  include_once '../usuario_dao.php';
 
   SessionManager::start();
   
@@ -36,5 +36,5 @@
     }
   }
 
-  header('Location: ../index.php#login');
+  header('Location: ../../index.php#login');
 ?>

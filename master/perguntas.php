@@ -64,7 +64,7 @@
   <div id="question-modal" class="modal">
     <div class="modal-content">
       <h3>Nova Pergunta</h3>
-      <form id="question-form" action="processamento/processa_perguntas.php" method="post">
+      <form id="question-form" action="processamento/perguntas/processa_perguntas.php" method="post">
         <input type="text" name="pergunta" placeholder="Digite a pergunta" required>
         <input type="text" name="opcao_A" placeholder="Opção A" required>
         <input type="text" name="opcao_B" placeholder="Opção B" required>

@@ -18,7 +18,7 @@
 <body>
   <div class="container">
     <h2>Crie sua Conta</h2>
-    <form id="register-form" action="processamento/processa_cadastro.php" method="post">
+    <form id="register-form" action="processamento/usuario/processa_cadastro.php" method="post">
 
       <label for="nome">Nome:</label>
       <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>

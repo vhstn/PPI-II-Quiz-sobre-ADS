@@ -1,6 +1,6 @@
 <?php
-    include_once 'session_manager.php';
-    include_once 'pergunta_dao.php';
+    include_once '../session_manager.php';
+    include_once '../pergunta_dao.php';
     
     SessionManager::start();
     SessionManager::requireAdminUser();
@@ -34,5 +34,5 @@
         }
     }
 
-    header('Location: ../index.php#perguntas');
+    header('Location: ../../index.php#perguntas');
 ?>
