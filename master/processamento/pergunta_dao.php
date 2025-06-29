@@ -42,10 +42,15 @@
             return current($opcaoCorreta);
         }
 
-        static function buscarTodas() {
+        static function buscarTodas($scrambled = false) {
             $connection = ConnectionManager::getConnection();
+            $query = "SELECT ID, TEXTO FROM PERGUNTAS";
 
-            $stmt = $connection->prepare("SELECT ID, TEXTO FROM PERGUNTAS");
+            if ($scrambled) {
+                $query = $query . " ORDER BY RAND() ";
+            }
+
+            $stmt = $connection->prepare($query);
             if ($stmt === false) {
                 die("Erro no prepare: " . $connection->error);
             }
