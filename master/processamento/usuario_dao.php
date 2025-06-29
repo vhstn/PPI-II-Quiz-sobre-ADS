@@ -56,9 +56,15 @@
 
         function atualizar() {
             $connection = ConnectionManager::getConnection();
-            $prepared_statement = $connection->prepare("UPDATE USUARIOS SET NOME = ?, SENHA = ?, EMAIL = ?, TIPO = ? WHERE ID = ?");
-            $prepared_statement->bind_param("ssssi", $this->nome, $this->senha, $this->email, $this->tipo, $this->id);
-            $prepared_statement->execute();
+            if ($this->senha !== null) {
+                $prepared_statement = $connection->prepare("UPDATE USUARIOS SET NOME = ?, SENHA = ?, EMAIL = ?, TIPO = ? WHERE ID = ?");
+                $prepared_statement->bind_param("ssssi", $this->nome, $this->senha, $this->email, $this->tipo, $this->id);
+                $prepared_statement->execute();
+            } else {
+                $prepared_statement = $connection->prepare("UPDATE USUARIOS SET NOME = ?, EMAIL = ?, TIPO = ? WHERE ID = ?");
+                $prepared_statement->bind_param("sssi", $this->nome, $this->email, $this->tipo, $this->id);
+                $prepared_statement->execute();
+            }
         }
     }
 ?>
