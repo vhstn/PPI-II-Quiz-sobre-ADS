@@ -2,7 +2,7 @@
     include_once 'connection_manager.php';
 
     class Pergunta {
-        private $id;
+        public $id;
         public $texto;
         public $opcoes;
 
@@ -23,6 +23,14 @@
             if ($prepared_statement->execute()) {
                 $this->id = $connection->insert_id;
             }
+        }
+
+        function atualizar() {
+            $connection = ConnectionManager::getConnection();
+            $prepared_statement = $connection->prepare("UPDATE PERGUNTAS SET TEXTO = ? WHERE ID = ?");
+            $prepared_statement->bind_param("si", $this->texto, $this->id);
+
+            $prepared_statement->execute();
         }
 
         function opcaoCorreta() {
@@ -99,6 +107,14 @@
             if ($prepared_statement->execute()) {
                 $this->id = $connection->insert_id;
             }
+        }
+
+        function atualizar() {
+            $connection = ConnectionManager::getConnection();
+            $prepared_statement = $connection->prepare("UPDATE PERGUNTAOPCOES SET TEXTO = ?, CORRETA = ? WHERE ID = ?");
+            $prepared_statement->bind_param("ssi", $this->texto, $this->correta ,$this->id);
+
+            $prepared_statement->execute();
         }
 
         static function buscarOpcoesDaPergunta($idPergunta) {

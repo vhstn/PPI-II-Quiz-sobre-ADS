@@ -123,6 +123,8 @@
 
         document.getElementById('correta').value = correta;
         modal.classList.add('active');
+
+        document.getElementById('question-form').action = "processamento/perguntas/processa_atualizar.php";
       });
     });
 
