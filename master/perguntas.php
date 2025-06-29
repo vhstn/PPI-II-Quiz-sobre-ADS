@@ -47,7 +47,10 @@
               <td class="correta"><?= $pergunta->opcaoCorreta()->identificador ?></td>
               <td>
                 <button class="action-btn edit-btn">Editar</button>
-                <button class="action-btn delete-btn">Excluir</button>
+                <form id="excluir-pergunta" action="processamento/perguntas/processa_exclusao.php" method="post">
+                  <input type="hidden" name="idPergunta" id="idPergunta" value=<?= $pergunta->getId() ?>>  
+                  <button type="submit" class="action-btn delete-btn">Excluir</button>
+                </form>
               </td>
             </tr>
           <?php endforeach; ?>

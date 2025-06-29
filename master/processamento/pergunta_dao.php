@@ -64,6 +64,18 @@
             return null;
         }
 
+        static function excluir($idPergunta) {
+            $connection = ConnectionManager::getConnection();
+
+            $prepared_statement_1 = $connection->prepare("DELETE FROM PERGUNTAOPCOES WHERE IDPERGUNTA = ?");
+            $prepared_statement_1->bind_param("i", $idPergunta);
+            $prepared_statement_1->execute();
+
+            $prepared_statement_2 = $connection->prepare("DELETE FROM PERGUNTAS WHERE ID = ?");
+            $prepared_statement_2->bind_param("i", $idPergunta);
+            $prepared_statement_2->execute();
+        }
+
     }
 
     class Opcao {
