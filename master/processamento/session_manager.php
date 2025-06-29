@@ -1,4 +1,6 @@
 <?php
+    include_once 'usuario_dao.php';
+
     class SessionManager {
         static function start() {
             if (session_status() === PHP_SESSION_NONE) {
@@ -7,7 +9,7 @@
         }
 
         static function destroy() {
-            SessionManager::start();
+            self::start();
             $_SESSION = [];
             session_destroy();
 
@@ -32,9 +34,17 @@
         }
 
         static function requireAuthentication() {
-            $loggedUser = SessionManager::getLoggedUser();
+            $loggedUser = self::getLoggedUser();
             if ($loggedUser === null) {
                 die("Você precisa estar logado para acessar esta página.");
+            }
+            return $loggedUser;
+        }
+
+        static function requireAdminUser() {
+            $loggedUser = self::requireAuthentication();
+            if ($loggedUser->tipo !== "A") {
+                die("Seu usuário não possui as permissões necessárias para acessar esta página.");
             }
             return $loggedUser;
         }

@@ -87,3 +87,31 @@
     .modal-content .actions button {
       flex: 1;
     }
+
+    /* Estiliza a lista dentro da célula de opções */
+.opcoes-lista {
+  list-style-type: none; /* Remove os marcadores (bolinhas) da lista */
+  padding-left: 0;       /* Remove o preenchimento padrão à esquerda */
+  margin: 0;             /* Remove a margem padrão */
+}
+
+.opcoes-lista li {
+  padding: 4px 0; /* Adiciona um pequeno espaçamento vertical entre as opções */
+}
+
+/* Estiliza os botões de Ação na tabela */
+.action-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  margin-right: 5px; /* Espaço entre os botões */
+  width: 80px; /* Largura fixa para alinhamento */
+  text-align: center;
+}
+
+.edit-btn {
+  background-color: #f0ad4e; /* Laranja */
+}
+
+.delete-btn {
+  background-color: #d9534f; /* Vermelho */
+}

@@ -4,6 +4,11 @@
     class Pergunta {
         private $id;
         public $texto;
+        public $opcoes;
+
+        function getId() {
+            return $this->id;
+        }
 
         function __construct($texto = null, $opcoes = []) {
             $this->texto = $texto;
@@ -19,6 +24,46 @@
                 $this->id = $connection->insert_id;
             }
         }
+
+        function opcaoCorreta() {
+            $opcaoCorreta = array_filter(
+                $this->opcoes,
+                fn($opcao) => $opcao->correta === 'S'
+            );
+
+            return current($opcaoCorreta);
+        }
+
+        static function buscarTodas() {
+            $connection = ConnectionManager::getConnection();
+
+            $stmt = $connection->prepare("SELECT ID, TEXTO FROM PERGUNTAS");
+            if ($stmt === false) {
+                die("Erro no prepare: " . $connection->error);
+            }
+
+            $stmt->execute();
+        
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
+                $perguntas = [];
+
+                while ($row = $result->fetch_assoc()) {
+                    $pergunta = new Pergunta();
+                    $pergunta->id = $row['ID'];
+                    $pergunta->texto = $row['TEXTO'];
+                    $pergunta->opcoes = Opcao::buscarOpcoesDaPergunta($row['ID']);
+                    
+                    $perguntas[] = $pergunta;
+                }
+
+                return $perguntas;
+            }
+        
+            return null;
+        }
+
     }
 
     class Opcao {
@@ -26,8 +71,9 @@
         public $idPergunta;
         public $texto;
         public $correta;
+        public $identificador;
 
-        function __construct($idPergunta = null, $texto = null, $correta = "N") {
+        function __construct($idPergunta = null, $texto = null, $identificador = null, $correta = "N") {
             $this->idPergunta = $idPergunta;
             $this->texto = $texto;
             $this->correta = $correta;
@@ -35,8 +81,8 @@
 
         function persistir() {
             $connection = ConnectionManager::getConnection();
-            $prepared_statement = $connection->prepare("INSERT INTO PERGUNTAOPCOES (IDPERGUNTA, TEXTO, CORRETA) VALUES (?, ?, ?)");
-            $prepared_statement->bind_param("iss", $this->idPergunta, $this->texto, $this->correta);
+            $prepared_statement = $connection->prepare("INSERT INTO PERGUNTAOPCOES (IDPERGUNTA, TEXTO, CORRETA, IDENTIFICADOR) VALUES (?, ?, ?, ?)");
+            $prepared_statement->bind_param("isss", $this->idPergunta, $this->texto, $this->correta, $this->identificador);
 
             if ($prepared_statement->execute()) {
                 $this->id = $connection->insert_id;
@@ -46,7 +92,7 @@
         static function buscarOpcoesDaPergunta($idPergunta) {
             $connection = ConnectionManager::getConnection();
 
-            $stmt = $connection->prepare("SELECT ID, IDPERGUNTA, TEXTO, CORRETA FROM PERGUNTAOPCOES WHERE IDPERGUNTA = ?");
+            $stmt = $connection->prepare("SELECT ID, IDPERGUNTA, TEXTO, CORRETA, IDENTIFICADOR FROM PERGUNTAOPCOES WHERE IDPERGUNTA = ?");
             if ($stmt === false) {
                 die("Erro no prepare: " . $connection->error);
             }
@@ -65,6 +111,7 @@
                     $opcao->idPergunta = $row['IDPERGUNTA'];
                     $opcao->texto = $row['TEXTO'];
                     $opcao->correta = $row['CORRETA'];
+                    $opcao->identificador = $row['IDENTIFICADOR'];
                     
                     $opcoes[] = $opcao;
                 }

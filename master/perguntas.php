@@ -4,7 +4,10 @@
   include_once 'processamento/pergunta_dao.php';
 
   SessionManager::start();
-  $loggedUser = SessionManager::requireAuthentication();
+  SessionManager::requireAdminUser();
+
+  $flashMessage = SessionManager::getFlashMessage();
+  $perguntas = Pergunta::buscarTodas();
 ?>
 
 <!DOCTYPE html>
@@ -19,31 +22,54 @@
     <h2>Perguntas do Quiz</h2>
     <button id="add-question-btn">Adicionar Nova Pergunta</button>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Pergunta</th>
-          <th>Opções</th>
-          <th>Correta</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="questions-table-body">
-        <!-- Conteúdo dinâmico -->
-      </tbody>
-    </table>
+    <?php if (empty($perguntas)): ?>
+      <h3>Sem perguntas cadastradas no sistema.</h3>
+    <?php else: ?>
+      <table>
+        <thead>
+          <tr>
+            <th>Pergunta</th>
+            <th>Opções</th>
+            <th>Correta</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="questions-table-body">
+          <?php foreach ($perguntas as $pergunta): ?>
+            <tr>
+              <td><?= htmlspecialchars($pergunta->texto) ?></td>
+              <td>
+                <ul class="opcoes-lista">
+                  <?php foreach ($pergunta->opcoes as $opcao): ?>
+                    <li>
+                      <strong><?= $opcao->identificador . ':' ?></strong>
+                      <?= htmlspecialchars($opcao->texto) ?>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </td>
+              <td><?= $pergunta->opcaoCorreta()->identificador ?></td>
+              <td>
+                <button class="action-btn edit-btn">Editar</button>
+                <button class="action-btn delete-btn">Excluir</button>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    <?php endif; ?>
   </div>
 
   <!-- Modal -->
   <div id="question-modal" class="modal">
     <div class="modal-content">
       <h3>Nova Pergunta</h3>
-      <form id="question-form">
+      <form id="question-form" action="processamento/processa_perguntas.php" method="post">
         <input type="text" name="pergunta" placeholder="Digite a pergunta" required>
-        <input type="text" name="opcao_a" placeholder="Opção A" required>
-        <input type="text" name="opcao_b" placeholder="Opção B" required>
-        <input type="text" name="opcao_c" placeholder="Opção C" required>
-        <input type="text" name="opcao_d" placeholder="Opção D" required>
+        <input type="text" name="opcao_A" placeholder="Opção A" required>
+        <input type="text" name="opcao_B" placeholder="Opção B" required>
+        <input type="text" name="opcao_C" placeholder="Opção C" required>
+        <input type="text" name="opcao_D" placeholder="Opção D" required>
         <select name="correta" required>
           <option value="">Resposta correta</option>
           <option value="A">A</option>
@@ -69,6 +95,14 @@
     window.onclick = (e) => {
       if (e.target === modal) modal.classList.remove('active');
     };
+
+    <?php if ($flashMessage): ?>
+      Swal.fire({
+        icon: <?= json_encode($flashMessage['icon']) ?>,
+        title: <?= json_encode($flashMessage['message']) ?>,
+        confirmButtonText: 'OK'
+      });
+  <?php endif; ?>
   </script>
 </body>
 </html>
