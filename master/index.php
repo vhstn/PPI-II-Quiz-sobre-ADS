@@ -2,12 +2,11 @@
 <html lang="pt-BR">
 <head>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <meta charset="UTF-8" />
-  <title>Quiz de ADS</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/hashSenha.js"></script>
   <script src="js/swal.js"></script>
-  <link rel="stylesheet" href="css/cadastro.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>Quiz de ADS</title>
 </head>
 <body>
     <div id="conteudo-principal"></div>
@@ -52,8 +51,6 @@
   window.addEventListener('hashchange', carregarPaginaHash);
 
   $(document).ready(carregarPaginaHash);
-
-  monitorarSenha('senha', 'senhaHash');
 
 </script>
 </html>

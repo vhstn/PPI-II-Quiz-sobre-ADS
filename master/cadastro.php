@@ -47,10 +47,14 @@
   monitorarSenha('senha', 'senhaHash');
 
   <?php if ($flashMessage): ?>
-     fire_swal(
+    fire_swal(
       <?= json_encode($flashMessage['icon']) ?>, 
       <?= json_encode($flashMessage['message']) ?>
     );
+    if (<?= json_encode($flashMessage['issuccess'] ?? false) ?>) {
+      window.location.hash = 'login';
+      carregarPaginaHash(); 
+    }
   <?php endif; ?>
 
 </script>

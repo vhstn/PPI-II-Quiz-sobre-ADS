@@ -24,7 +24,8 @@
       SessionManager::setFlashMessage([
         'icon' => 'success',
         'message' => 'Login realizado com sucesso. <br>Bem vindo(a), ' . $usuario->nome . '!',
-        'issuccess' => true
+        'issuccess' => true,
+        'tipo' => $usuario->tipo
       ]);
 
     } catch (Exception $ex) {

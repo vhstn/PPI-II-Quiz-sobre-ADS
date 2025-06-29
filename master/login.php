@@ -43,7 +43,14 @@
 
     }).then((resultado) => {
       if (<?= json_encode($flashMessage['issuccess'] ?? false) ?>) {
-        window.location.href = "index.php#quiz";
+        if (<?= json_encode($flashMessage['tipo'] ?? '') ?> === 'U') {
+          window.location.hash = 'quiz';
+          carregarPaginaHash(); 
+        }
+        if (<?= json_encode($flashMessage['tipo'] ?? '') ?> === 'A') {
+          window.location.hash = 'perguntas';
+          carregarPaginaHash(); 
+        }        
       }
 
     })

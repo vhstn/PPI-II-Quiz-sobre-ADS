@@ -22,7 +22,8 @@
 
       SessionManager::setFlashMessage([
         'icon' => 'success',
-        'message' => 'Cadastro realizado com sucesso!'
+        'message' => 'Cadastro realizado com sucesso!',
+        'issuccess' => true
       ]);
 
     } catch (mysqli_sql_exception $ex) {
