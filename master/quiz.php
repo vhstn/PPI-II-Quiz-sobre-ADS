@@ -17,13 +17,18 @@
   <title>Responder Quiz</title>
   <style>
     body {
-     margin: 0;
-     font-family: 'Segoe UI', sans-serif;
-     background: linear-gradient(to right, #667eea, #764ba2);
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      height: 100vh;
+      overflow: hidden;
     }
+    
     .pagina {
       display: flex;
-      min-height: 100vh;
+      height: 100vh;
+      width: 100vw;
     }
     .container {
      flex: 1;
