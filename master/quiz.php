@@ -1,7 +1,19 @@
+<?php
+  include_once 'processamento/session_manager.php';
+  include_once 'processamento/pergunta_dao.php';
+
+  SessionManager::start();
+  SessionManager::requireAuthentication();
+
+  $perguntas = Pergunta::buscarTodas(scrambled: true);
+  $flashMessage = SessionManager::getFlashMessage();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/quiz.css">
   <title>Responder Quiz</title>
   <style>
     body {
@@ -85,50 +97,30 @@
   </div>
   <div class="container">
     <h2>Quiz ADS</h2>
-    <form id="quiz-form">
-      <div class="question">
-        <p>1. O que significa a sigla HTML?</p>
-        <label><input type="radio" name="q1" value="a"> HyperText Markup Language</label>
-        <label><input type="radio" name="q1" value="b"> HyperText Machine Language</label>
-        <label><input type="radio" name="q1" value="c"> HighText Markup Language</label>
-        <label><input type="radio" name="q1" value="d"> HyperTool Markup Language</label>
-      </div>
-
-      <div class="question">
-        <p>2. Qual linguagem é utilizada para estilizar páginas web?</p>
-        <label><input type="radio" name="q2" value="a"> PHP</label>
-        <label><input type="radio" name="q2" value="b"> HTML</label>
-        <label><input type="radio" name="q2" value="c"> CSS</label>
-        <label><input type="radio" name="q2" value="d"> SQL</label>
-      </div>
-
-      <div class="question">
-        <p>3. Qual comando é usado para imprimir algo no console em JavaScript?</p>
-        <label><input type="radio" name="q3" value="a"> print()</label>
-        <label><input type="radio" name="q3" value="b"> echo()</label>
-        <label><input type="radio" name="q3" value="c"> log.console()</label>
-        <label><input type="radio" name="q3" value="d"> console.log()</label>
-      </div>
-
-      <div class="question">
-        <p>4. Qual dessas linguagens é utilizada no backend?</p>
-        <label><input type="radio" name="q4" value="a"> HTML</label>
-        <label><input type="radio" name="q4" value="b"> PHP</label>
-        <label><input type="radio" name="q4" value="c"> CSS</label>
-        <label><input type="radio" name="q4" value="d"> XML</label>
-      </div>
-
-      <div class="question">
-        <p>5. O que é um banco de dados relacional?</p>
-        <label><input type="radio" name="q5" value="a"> Um banco com arquivos de texto</label>
-        <label><input type="radio" name="q5" value="b"> Um banco baseado em documentos</label>
-        <label><input type="radio" name="q5" value="c"> Um banco com relações entre tabelas</label>
-        <label><input type="radio" name="q5" value="d"> Um banco em nuvem</label>
-      </div>
-
+    <form id="quiz-form" action="processamento/quiz/processar_quiz.php" method="post">
+      <input type="hidden" value="true" name="submitted" />
+      <?php foreach ($perguntas as $pergunta): ?>
+        <div class="question">
+          <p><?= htmlspecialchars($pergunta->texto) ?></p>
+          <?php foreach ($pergunta->opcoes as $opcao): ?>
+            <label><input type="radio" name=<?= 'q' . $pergunta->id ?> value=<?= $opcao->identificador ?> required> <?= htmlspecialchars($opcao->texto) ?></label>
+          <?php endforeach; ?>
+        </div>
+      <?php endforeach; ?>
       <button type="submit">Finalizar Quiz</button>
     </form>
   </div>
   </div>
 </body>
 </html>
+
+<script>
+  <?php if ($flashMessage): ?>
+    Swal.fire({
+      icon: <?= json_encode($flashMessage['icon']) ?>,
+      title: <?= json_encode($flashMessage['message']) ?>,
+      confirmButtonText: 'OK'
+    });
+  <?php endif; ?>
+  
+</script>

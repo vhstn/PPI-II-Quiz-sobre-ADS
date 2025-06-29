@@ -2,7 +2,7 @@
     include_once 'connection_manager.php';
 
     class Pergunta {
-        private $id;
+        public $id;
         public $texto;
         public $opcoes;
 
@@ -25,6 +25,14 @@
             }
         }
 
+        function atualizar() {
+            $connection = ConnectionManager::getConnection();
+            $prepared_statement = $connection->prepare("UPDATE PERGUNTAS SET TEXTO = ? WHERE ID = ?");
+            $prepared_statement->bind_param("si", $this->texto, $this->id);
+
+            $prepared_statement->execute();
+        }
+
         function opcaoCorreta() {
             $opcaoCorreta = array_filter(
                 $this->opcoes,
@@ -34,10 +42,15 @@
             return current($opcaoCorreta);
         }
 
-        static function buscarTodas() {
+        static function buscarTodas($scrambled = false) {
             $connection = ConnectionManager::getConnection();
+            $query = "SELECT ID, TEXTO FROM PERGUNTAS";
 
-            $stmt = $connection->prepare("SELECT ID, TEXTO FROM PERGUNTAS");
+            if ($scrambled) {
+                $query = $query . " ORDER BY RAND() ";
+            }
+
+            $stmt = $connection->prepare($query);
             if ($stmt === false) {
                 die("Erro no prepare: " . $connection->error);
             }
@@ -99,6 +112,14 @@
             if ($prepared_statement->execute()) {
                 $this->id = $connection->insert_id;
             }
+        }
+
+        function atualizar() {
+            $connection = ConnectionManager::getConnection();
+            $prepared_statement = $connection->prepare("UPDATE PERGUNTAOPCOES SET TEXTO = ?, CORRETA = ? WHERE ID = ?");
+            $prepared_statement->bind_param("ssi", $this->texto, $this->correta ,$this->id);
+
+            $prepared_statement->execute();
         }
 
         static function buscarOpcoesDaPergunta($idPergunta) {
