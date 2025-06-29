@@ -14,7 +14,19 @@
 </body>
 
 <script>
-  function carregarPagina(pagina) {
+  function carregarPaginaHash() {
+    const rota = window.location.hash || '#login'; 
+    let pagina = '';
+    switch (rota) {
+      case '#login':
+        pagina = 'login.php';
+        break;
+      case '#perguntas':
+        pagina = 'perguntas.php';
+        break;
+      default:
+        pagina = 'cadastro.php';
+    }
     $.ajax({
       url: pagina,
       method: 'GET',
@@ -27,29 +39,15 @@
           title: 'Erro',
           text: 'Não foi possível carregar a página.'
         });
-        carregarPagina('login.php');
       }
     });
   }
-  
-  $(document).ready(function () {
-    carregarPagina('login.php');
-  });
+
+  window.addEventListener('hashchange', carregarPaginaHash);
+
+  $(document).ready(carregarPaginaHash);
 
   monitorarSenha('senha', 'senhaHash');
 
-  <?php if ($sucesso !== 0): ?>
-    Swal.fire({
-      icon: <?= json_encode($icon) ?>,
-      title: <?= json_encode($mensagem) ?>,
-      confirmButtonText: 'OK'
-
-    }).then((resultado) => {
-      if (<?= $sucesso ?> === 1) {
-        window.location.href = "quiz.php";
-      }
-      
-    })
-  <?php endif; ?>
 </script>
 </html>

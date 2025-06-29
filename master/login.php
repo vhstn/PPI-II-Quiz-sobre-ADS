@@ -56,7 +56,7 @@
       <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
       <label for="senha">Senha:</label>
       <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-      <div class="link">Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></div>
+      <div class="link">Não tem uma conta? <a href="#cadastro">Cadastre-se</a></div>
       <button type="submit">Entrar</button>
       <input type="hidden" id="senhaHash" name="senhaHash">
     </form>
