@@ -18,7 +18,7 @@
 <body>
   <div class="container">
     <h2>Entrar na Conta</h2>
-    <form id="login-form" action="processamento/processa_login.php" method="post">
+    <form id="login-form" action="processamento/usuario/processa_login.php" method="post">
 
       <label for="email">E-mail:</label>
       <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>

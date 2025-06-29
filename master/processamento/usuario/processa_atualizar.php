@@ -1,7 +1,7 @@
 <?php
     $senhaDefault = "********";
-    include_once 'session_manager.php';
-    include_once 'usuario_dao.php';
+    include_once '../session_manager.php';
+    include_once '../usuario_dao.php';
 
     SessionManager::start();
     $loggedUser = SessionManager::getLoggedUser();
@@ -41,5 +41,5 @@
         }
     }
 
-    header('Location: ../index.php#atualizar');
+    header('Location: ../../index.php#atualizar');
 ?>
