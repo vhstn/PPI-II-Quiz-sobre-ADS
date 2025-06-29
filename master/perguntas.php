@@ -47,7 +47,7 @@
               <td class="correta"><?= $pergunta->opcaoCorreta()->identificador ?></td>
               <td>
                 <button class="action-btn edit-btn">Editar</button>
-                <form id="excluir-pergunta" action="processamento/perguntas/processa_exclusao.php" method="post">
+                <form class="excluir-pergunta-form" action="processamento/perguntas/processa_exclusao.php" method="post">
                   <input type="hidden" name="idPergunta" id="idPergunta" value=<?= $pergunta->getId() ?>>  
                   <button type="submit" class="action-btn delete-btn">Excluir</button>
                 </form>
@@ -135,6 +135,28 @@
         confirmButtonText: 'OK'
       });
     <?php endif; ?>
+
+    document.querySelectorAll('.excluir-pergunta-form').forEach(form => {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); 
+      
+        Swal.fire({
+          title: 'Tem certeza?',
+          text: "Você realmente deseja excluir esta pergunta?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sim, excluir!',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
+
   </script>
 </body>
 </html>
