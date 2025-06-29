@@ -1,5 +1,6 @@
 <?php
     include_once 'processamento/session_manager.php';
-
-    SessionManager::destroy();
+    
+    SessionManager::destroy();    
+    header('Location: index.php#login');
 ?>
