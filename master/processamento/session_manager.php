@@ -42,16 +42,9 @@
         }
 
         static function requireAdminUser() {
-            self::start();
             $loggedUser = self::requireAuthentication();
             if ($loggedUser->tipo !== "A") {
-                self::setFlashMessage([
-                    'icon' => 'error',
-                    'message' => "Seu usuário não possui as permissões necessárias para acessar esta página."
-                ]);
-
-                header('Location: index.php#quiz');
-                exit();
+                die('Seu usuário não possui as permissões necessárias para acessar esta página.');
             }
             return $loggedUser;
         }

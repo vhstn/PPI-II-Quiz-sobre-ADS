@@ -97,13 +97,16 @@
    <div class="pagina">
  <div class="sidebar">
     <h2>Quiz ADS</h2>
-    <button class="nav-button" onclick="location.href='atualizar.php'">Minha conta</button>
-    <button class="nav-button" onclick="location.href='quiz.php'">Quiz</button>
-    <button class="nav-button" onclick="location.href='perguntas.php'">Perguntas</button>
+    <button class="nav-button" onclick="location.href='index.php#atualizar'">Minha conta</button>
+    <button class="nav-button" onclick="location.href='index.php#quiz'">Quiz</button>
+    <button class="nav-button" onclick="location.href='index.php#perguntas'">Perguntas</button>
     <button class="nav-button" onclick="location.href='logout.php'">Sair</button>
   </div>
   <div class="container">
     <h2>Quiz ADS</h2>
+    <?php if (empty($perguntas)): ?>
+      <h3>Não há perguntas cadastradas! Contate o administrador de sistema.</h3>
+    <?php else: ?>
     <form id="quiz-form" action="processamento/quiz/processar_quiz.php" method="post">
       <input type="hidden" value="true" name="submitted" />
       <?php foreach ($perguntas as $pergunta): ?>
@@ -116,6 +119,7 @@
       <?php endforeach; ?>
       <button type="submit">Finalizar Quiz</button>
     </form>
+    <?php endif; ?>
   </div>
   </div>
 </body>

@@ -18,6 +18,8 @@
                 }
             }
 
+            $loggedUser->adicionarPontuacao($qtdPerguntas, $pontuacao);
+
             SessionManager::setFlashMessage([
                 'icon' => 'info',
                 'message' => 'Quiz concluído! Sua pontuação foi de ' . $pontuacao . '/' . $qtdPerguntas

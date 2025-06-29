@@ -3,6 +3,10 @@
   SessionManager::start();
 
   $flashMessage = SessionManager::getFlashMessage();
+
+  if ($flashMessage['isLogoutRequest'] ?? false) {
+    SessionManager::destroy();
+  }
 ?>
 
 <!DOCTYPE html>

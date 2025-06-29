@@ -22,9 +22,9 @@
 <div class="pagina">
   <div class="sidebar">
     <h2 class="sidebar-h2">Quiz ADS</h2>
-    <button class="nav-button" onclick="location.href='atualizar.php'">Minha conta</button>
-    <button class="nav-button" onclick="location.href='quiz.php'">Quiz</button>
-    <button class="nav-button" onclick="location.href='perguntas.php'">Perguntas</button>
+    <button class="nav-button" onclick="location.href='index.php#atualizar'">Minha conta</button>
+    <button class="nav-button" onclick="location.href='index.php#quiz'">Quiz</button>
+    <button class="nav-button" onclick="location.href='index.php#perguntas'">Perguntas</button>
     <button class="nav-button" onclick="location.href='logout.php'">Sair</button>
   </div>
 
@@ -50,7 +50,7 @@
               <td class="texto"><?= htmlspecialchars($pergunta->texto) ?></td>
               <td class="opcoes">
                 <?php foreach ($pergunta->opcoes as $opcao): ?>
-                  <div data-id="<?= $opcao->identificador ?>"><?= $opcao->identificador ?>: <?= htmlspecialchars($opcao->texto) ?></div>
+                  <div data-id="<?= $opcao->identificador ?>"><strong><?= $opcao->identificador ?>:</strong> <?= htmlspecialchars($opcao->texto) ?></div>
                 <?php endforeach; ?>
               </td>
               <td class="correta"><?= $pergunta->opcaoCorreta()->identificador ?></td>

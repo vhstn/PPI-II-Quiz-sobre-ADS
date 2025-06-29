@@ -6,6 +6,7 @@
     
     $senhaDefault = "********";
     $loggedUser = SessionManager::requireAuthentication();
+    $pontuacoes = $loggedUser->buscarPontuacoes();
 
     $uSelected = ($loggedUser->tipo) == "U" ? "selected" : "";
     $aSelected = ($loggedUser->tipo) == "A" ? "selected" : "";
@@ -21,11 +22,21 @@
   <title>Cadastro</title>
   <script src="js/hashSenha.js"></script>
   <script src="js/swal.js"></script>
-  <link rel="stylesheet" href="css/cadastro.css">
+  <link rel="stylesheet" href="css/atualizar.css">
 </head>
 <body>
+  <div class="pagina">
+  <div class="sidebar">
+    <h2 class="sidebar-h2">Quiz ADS</h2>
+    <button class="nav-button" onclick="location.href='atualizar.php'">Minha conta</button>
+    <button class="nav-button" onclick="location.href='quiz.php'">Quiz</button>
+    <button class="nav-button" onclick="location.href='perguntas.php'">Perguntas</button>
+    <button class="nav-button" onclick="location.href='logout.php'">Sair</button>
+  </div>
+  <div class="main-content">
+  
   <div class="container">
-    <h2><?= $loggedUser->nome ?>, atualize seu cadastro</h2>
+    <h2>Minhas informações</h2>
     <form id="register-form" action="processamento/usuario/processa_atualizar.php" method="post">
 
       <label for="nome">Nome:</label>
@@ -43,10 +54,42 @@
         <option value="A" <?= $aSelected ?>>Administrador</option>
       </select>
 
-      <button type="submit">Atualizar</button>
+      <button type="submit">Atualizar informações</button>
       <input type="hidden" id="senhaHash" name="senhaHash">
     </form>
+    <form id="excluir-conta-form" action="processamento/usuario/processa_exclusao.php" method="post">
+      <button type="submit">Excluir conta</button>
+    </form>
   </div>
+            <!-- Card 2: Pontuações -->
+  <div class="container">
+    <h2>Minhas Pontuações</h2>
+    <?php if (empty($pontuacoes)): ?>
+      <p>Você ainda não respondeu o quiz!</p>
+    <?php else: ?>
+    <table class="score-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Acertos</th>
+          <th>Questões</th>
+          <th>Média</th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php foreach ($pontuacoes as $pontuacao): ?>
+        <tr>
+          <td><?= $pontuacao->data ?></td>
+          <td><?= $pontuacao->qtdAcertos ?></td>
+          <td><?= $pontuacao->qtdPerguntas ?></td>
+          <td><?= $pontuacao->percentual ?></td>
+        </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+    <?php endif; ?>
+  </div>
+</div>
 </body>
 
 <script>
@@ -58,13 +101,28 @@
       icon: <?= json_encode($flashMessage['icon']) ?>,
       title: <?= json_encode($flashMessage['message']) ?>,
       confirmButtonText: 'OK'
-
-    }).then((resultado) => {
-      if (<?= json_encode($flashMessage['issuccess'] ?? false) ?>) {
-        window.location.href = "index.php#quiz";
-      }
-      
-    })
+    });
   <?php endif; ?>
+
+      document.querySelectorAll('#excluir-conta-form').forEach(form => {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); 
+      
+        Swal.fire({
+          title: 'Tem certeza?',
+          text: "Você realmente deseja excluir sua? Todas as suas informações serão perdidas.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sim, excluir!',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
 
 </script>
