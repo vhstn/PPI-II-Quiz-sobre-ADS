@@ -115,7 +115,7 @@
                     $pontuacao->idUsuario = $row['IDUSUARIO'];
                     $pontuacao->qtdAcertos = $row['QTDACERTOS'];
                     $pontuacao->qtdPerguntas = $row['QTDQUESTOES'];
-                    $pontuacao->percentual = $row['PERCENTUAL'] . '%';
+                    $pontuacao->percentual = number_format($row['PERCENTUAL'], 2) . '%';
                     $pontuacao->data = (new DateTime($row['DATA']))->format('d/m/Y');
 
                     $pontuacoes[] = $pontuacao;
