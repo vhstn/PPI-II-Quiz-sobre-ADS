@@ -4,22 +4,24 @@
             return new mysqli("localhost:3306", "root", "", "QUIZ_ADS");
         }
     }
+
+    $erro = false;
+    $mensagem = '';
+    try {
+        ConnectionManager::getConnection();
+    } catch (Exception $ex) {
+        $erro = true;
+        $mensagem = 'Erro ao conectar com o banco de dados: ' . $ex->getMessage();
+    }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connection manager</title>
-</head>
-<body>
-    <?php
-        try {
-            ConnectionManager::getConnection();
-        } catch (Exception $ex) {
-            echo "<h1>Erro ao realizar a conexão: " . $ex->getMessage() . "</h1>";
-        }
-    ?>
-</body>
-</html>
+<?php if($erro): ?>
+    <script>
+        Swal.fire({
+          icon: 'error',
+          title: <?= json_encode($mensagem) ?>,
+          confirmButtonText: 'OK'
+        });
+    </script>
+    <?php die(); ?>
+<?php endif; ?>
